@@ -37,3 +37,8 @@ yarn-error.log*
 # Local configuration
 # This file contains sensitive paths and should not be committed.
 local.properties
+
+# Expo
+.expo
+dist/
+web-build/
