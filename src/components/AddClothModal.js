@@ -9,6 +9,8 @@ import {
   Image,
   Alert,
   ScrollView,
+  PermissionsAndroid,
+  Platform,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
@@ -48,7 +50,7 @@ const AddClothModal = ({visible, onClose, onSave, cloth}) => {
       Alert.alert('Missing Info', 'Please fill all fields and select an image.');
       return;
     }
-    onSave({name: itemName, brand, material, image});
+    onSave({name: itemName, brand, material, imageUri: image.uri});
     handleClose();
   };
 
@@ -58,8 +60,8 @@ const AddClothModal = ({visible, onClose, onSave, cloth}) => {
       return;
     }
     if (response.errorCode) {
-      console.error('ImagePicker Error: ', response.errorMessage);
-      Alert.alert('Image Picker Error', response.errorMessage);
+      console.error('ImagePicker Error:', response.errorCode, response.errorMessage);
+      Alert.alert('Image Picker Error', response.errorMessage || 'Unknown error');
       return;
     }
     if (response.assets && response.assets.length > 0) {
@@ -67,17 +69,43 @@ const AddClothModal = ({visible, onClose, onSave, cloth}) => {
     }
   };
 
+  const requestCameraPermission = async () => {
+    if (Platform.OS !== 'android') return true;
+
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: 'Camera Permission',
+          message: 'StyleMe needs access to your camera to take photos.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      return granted === PermissionsAndroid.RESULTS.GRANTED;
+    } catch (err) {
+      console.warn('Permission error:', err);
+      return false;
+    }
+  };
+
   const selectImageSource = () => {
     Alert.alert('Add a Photo', 'Choose an option', [
       {
         text: 'Take Photo...',
-        onPress: () => launchCamera({mediaType: 'photo', saveToPhotos: true}).then(handleImagePickerResponse),
-
+        onPress: async () => {
+          const hasPermission = await requestCameraPermission();
+          if (!hasPermission) {
+            Alert.alert('Permission Denied', 'Camera permission is required.');
+            return;
+          }
+          launchCamera({mediaType: 'photo'}).then(handleImagePickerResponse);
+        },
       },
       {
         text: 'Choose from Library...',
         onPress: () => launchImageLibrary({mediaType: 'photo'}).then(handleImagePickerResponse),
-
       },
       {text: 'Cancel', style: 'cancel'},
     ]);
@@ -164,7 +192,7 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    alignSelf: 'center', // Center the title specifically
+    alignSelf: 'center',
     color: COLORS.text,
     marginBottom: 20,
   },
@@ -174,7 +202,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     backgroundColor: COLORS.card,
     justifyContent: 'center',
-    alignSelf: 'center', // Center the image picker specifically
+    alignSelf: 'center',
     alignItems: 'center',
     marginBottom: 20,
     borderWidth: 2,
@@ -197,7 +225,7 @@ const styles = StyleSheet.create({
     padding: 15,
     marginBottom: 15,
     fontSize: 16,
-    height: 50, // Ensures a fixed height for the input
+    height: 50,
     color: COLORS.text,
   },
   modalActions: {
