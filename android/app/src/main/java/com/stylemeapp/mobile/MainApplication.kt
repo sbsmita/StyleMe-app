@@ -1,4 +1,4 @@
-package com.styleme
+package com.stylemeapp.mobile
 
 import android.app.Application
 import com.facebook.react.PackageList

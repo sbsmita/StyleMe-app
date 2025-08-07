@@ -744,8 +744,8 @@
     "android": {
       "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe-app/android",
       "appName": "app",
-      "packageName": "com.styleme",
-      "applicationId": "com.styleme",
+      "packageName": "com.stylemeapp.mobile",
+      "applicationId": "com.stylemeapp.mobile",
       "mainActivity": ".MainActivity",
       "assets": []
     }
