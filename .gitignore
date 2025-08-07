@@ -3,6 +3,7 @@ node_modules/
 ios/Pods/
 
 # Build artifacts and caches
+android/build/
 android/app/build/
 android/.gradle/
 android/app/.cxx/

@@ -1,26 +1,26 @@
 {
-  "root": "/home/sb/hackathon_london/hack_rev/StyleMe",
-  "reactNativePath": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native",
+  "root": "/home/sb/hackathon_london/hack_rev/StyleMe-app",
+  "reactNativePath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native",
   "reactNativeVersion": "0.80",
   "dependencies": {
     "@react-native-async-storage/async-storage": {
-      "root": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/@react-native-async-storage/async-storage",
+      "root": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/@react-native-async-storage/async-storage",
       "name": "@react-native-async-storage/async-storage",
       "platforms": {
         "ios": {
-          "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/@react-native-async-storage/async-storage/RNCAsyncStorage.podspec",
+          "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/@react-native-async-storage/async-storage/RNCAsyncStorage.podspec",
           "version": "2.2.0",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/@react-native-async-storage/async-storage/android",
+          "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/@react-native-async-storage/async-storage/android",
           "packageImportPath": "import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;",
           "packageInstance": "new AsyncStoragePackage()",
           "buildTypes": [],
           "libraryName": "rnasyncstorage",
           "componentDescriptors": [],
-          "cmakeListsPath": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -29,17 +29,17 @@
       }
     },
     "react-native-gesture-handler": {
-      "root": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-gesture-handler",
+      "root": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-gesture-handler",
       "name": "react-native-gesture-handler",
       "platforms": {
         "ios": {
-          "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-gesture-handler/RNGestureHandler.podspec",
+          "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-gesture-handler/RNGestureHandler.podspec",
           "version": "2.27.2",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-gesture-handler/android",
+          "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-gesture-handler/android",
           "packageImportPath": "import com.swmansion.gesturehandler.RNGestureHandlerPackage;",
           "packageInstance": "new RNGestureHandlerPackage()",
           "buildTypes": [],
@@ -48,7 +48,7 @@
             "RNGestureHandlerButtonComponentDescriptor",
             "RNGestureHandlerRootViewComponentDescriptor"
           ],
-          "cmakeListsPath": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-gesture-handler/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-gesture-handler/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -57,22 +57,22 @@
       }
     },
     "react-native-get-random-values": {
-      "root": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-get-random-values",
+      "root": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-get-random-values",
       "name": "react-native-get-random-values",
       "platforms": {
         "ios": {
-          "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-get-random-values/react-native-get-random-values.podspec",
+          "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-get-random-values/react-native-get-random-values.podspec",
           "version": "1.11.0",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-get-random-values/android",
+          "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-get-random-values/android",
           "packageImportPath": "import org.linusu.RNGetRandomValuesPackage;",
           "packageInstance": "new RNGetRandomValuesPackage()",
           "buildTypes": [],
           "componentDescriptors": [],
-          "cmakeListsPath": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-get-random-values/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-get-random-values/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -81,23 +81,23 @@
       }
     },
     "react-native-image-picker": {
-      "root": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-image-picker",
+      "root": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-image-picker",
       "name": "react-native-image-picker",
       "platforms": {
         "ios": {
-          "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-image-picker/react-native-image-picker.podspec",
+          "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-image-picker/react-native-image-picker.podspec",
           "version": "8.2.1",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-image-picker/android",
+          "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-image-picker/android",
           "packageImportPath": "import com.imagepicker.ImagePickerPackage;",
           "packageInstance": "new ImagePickerPackage()",
           "buildTypes": [],
           "libraryName": "RNImagePickerSpec",
           "componentDescriptors": [],
-          "cmakeListsPath": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-image-picker/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-image-picker/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -106,22 +106,22 @@
       }
     },
     "react-native-linear-gradient": {
-      "root": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-linear-gradient",
+      "root": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-linear-gradient",
       "name": "react-native-linear-gradient",
       "platforms": {
         "ios": {
-          "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-linear-gradient/BVLinearGradient.podspec",
+          "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-linear-gradient/BVLinearGradient.podspec",
           "version": "2.8.3",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-linear-gradient/android",
+          "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-linear-gradient/android",
           "packageImportPath": "import com.BV.LinearGradient.LinearGradientPackage;",
           "packageInstance": "new LinearGradientPackage()",
           "buildTypes": [],
           "componentDescriptors": [],
-          "cmakeListsPath": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -130,23 +130,23 @@
       }
     },
     "react-native-reanimated": {
-      "root": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-reanimated",
+      "root": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-reanimated",
       "name": "react-native-reanimated",
       "platforms": {
         "ios": {
-          "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-reanimated/RNReanimated.podspec",
+          "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-reanimated/RNReanimated.podspec",
           "version": "4.0.1",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-reanimated/android",
+          "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-reanimated/android",
           "packageImportPath": "import com.swmansion.reanimated.ReanimatedPackage;",
           "packageInstance": "new ReanimatedPackage()",
           "buildTypes": [],
           "libraryName": "rnreanimated",
           "componentDescriptors": [],
-          "cmakeListsPath": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -155,17 +155,17 @@
       }
     },
     "react-native-safe-area-context": {
-      "root": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-safe-area-context",
+      "root": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-safe-area-context",
       "name": "react-native-safe-area-context",
       "platforms": {
         "ios": {
-          "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec",
+          "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec",
           "version": "5.5.2",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-safe-area-context/android",
+          "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-safe-area-context/android",
           "packageImportPath": "import com.th3rdwave.safeareacontext.SafeAreaContextPackage;",
           "packageInstance": "new SafeAreaContextPackage()",
           "buildTypes": [],
@@ -174,7 +174,7 @@
             "RNCSafeAreaProviderComponentDescriptor",
             "RNCSafeAreaViewComponentDescriptor"
           ],
-          "cmakeListsPath": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-safe-area-context/android/src/main/jni/CMakeLists.txt",
+          "cmakeListsPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-safe-area-context/android/src/main/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -183,17 +183,17 @@
       }
     },
     "react-native-screens": {
-      "root": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-screens",
+      "root": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-screens",
       "name": "react-native-screens",
       "platforms": {
         "ios": {
-          "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-screens/RNScreens.podspec",
+          "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-screens/RNScreens.podspec",
           "version": "4.13.1",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-screens/android",
+          "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-screens/android",
           "packageImportPath": "import com.swmansion.rnscreens.RNScreensPackage;",
           "packageInstance": "new RNScreensPackage()",
           "buildTypes": [],
@@ -212,7 +212,7 @@
             "RNSModalScreenComponentDescriptor",
             "RNSBottomTabsComponentDescriptor"
           ],
-          "cmakeListsPath": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-screens/android/src/main/jni/CMakeLists.txt",
+          "cmakeListsPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-screens/android/src/main/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -221,23 +221,23 @@
       }
     },
     "react-native-vector-icons": {
-      "root": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-vector-icons",
+      "root": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-vector-icons",
       "name": "react-native-vector-icons",
       "platforms": {
         "ios": {
-          "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-vector-icons/RNVectorIcons.podspec",
+          "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-vector-icons/RNVectorIcons.podspec",
           "version": "10.3.0",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-vector-icons/android",
+          "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-vector-icons/android",
           "packageImportPath": "import com.oblador.vectoricons.VectorIconsPackage;",
           "packageInstance": "new VectorIconsPackage()",
           "buildTypes": [],
           "libraryName": "RNVectorIconsSpec",
           "componentDescriptors": [],
-          "cmakeListsPath": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-vector-icons/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-vector-icons/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -246,23 +246,23 @@
       }
     },
     "react-native-worklets": {
-      "root": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-worklets",
+      "root": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-worklets",
       "name": "react-native-worklets",
       "platforms": {
         "ios": {
-          "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-worklets/RNWorklets.podspec",
+          "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-worklets/RNWorklets.podspec",
           "version": "0.4.1",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-worklets/android",
+          "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-worklets/android",
           "packageImportPath": "import com.swmansion.worklets.WorkletsPackage;",
           "packageInstance": "new WorkletsPackage()",
           "buildTypes": [],
           "libraryName": "rnworklets",
           "componentDescriptors": [],
-          "cmakeListsPath": "/home/sb/hackathon_london/hack_rev/StyleMe/node_modules/react-native-worklets/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-worklets/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -433,7 +433,7 @@
         {
           "name": "--path <path>",
           "description": "Path to the React Native project root.",
-          "default": "/home/sb/hackathon_london/hack_rev/StyleMe"
+          "default": "/home/sb/hackathon_london/hack_rev/StyleMe-app"
         },
         {
           "name": "--platform <string>",
@@ -733,7 +733,7 @@
   "assets": [],
   "project": {
     "ios": {
-      "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe/ios",
+      "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe-app/ios",
       "xcodeProject": {
         "name": "StyleMe.xcodeproj",
         "path": ".",
@@ -742,7 +742,7 @@
       "assets": []
     },
     "android": {
-      "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe/android",
+      "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe-app/android",
       "appName": "app",
       "packageName": "com.styleme",
       "applicationId": "com.styleme",
