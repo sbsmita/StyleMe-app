@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -11,8 +11,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS} from '../constants/colors';
 
 const ClothingCard = ({item, onEdit, onDelete}) => {
-    const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    setHasError(false);
+  }, [item.imageUri]);
 
   return (
     <View style={styles.card}>
@@ -21,8 +26,11 @@ const ClothingCard = ({item, onEdit, onDelete}) => {
           <Image
             source={{uri: item.imageUri}}
             style={styles.cardImage}
-            onLoadEnd={() => setIsLoading(false)}
-            onError={() => setHasError(true)}
+            onLoad={() => setIsLoading(false)}
+            onError={() => {
+              setIsLoading(false);
+              setHasError(true);
+            }}
           />
         )}
         {isLoading && !hasError && <ActivityIndicator style={StyleSheet.absoluteFill} color={COLORS.primary} />}

@@ -50,7 +50,7 @@ const AddClothModal = ({visible, onClose, onSave, cloth}) => {
       Alert.alert('Missing Info', 'Please fill all fields and select an image.');
       return;
     }
-    onSave({name: itemName, brand, material, imageUri: image.uri});
+    onSave({name: itemName, brand, material, image: image});
     handleClose();
   };
 

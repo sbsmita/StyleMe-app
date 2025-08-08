@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   SafeAreaView,
   View,
@@ -10,6 +10,7 @@ import {
   Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {useFocusEffect} from '@react-navigation/native';
 import {COLORS} from '../constants/colors';
 import StarRating from '../components/StarRating';
 import useClothes from '../hooks/useClothes';
@@ -49,6 +50,24 @@ const OutfitBuilderScreen = ({navigation}) => {
     accessory: null,
   });
 
+  const clearForm = useCallback(() => {
+    setOutfitName('');
+    setRating(0);
+    setCanvasItems({
+      top: null,
+      bottom: null,
+      shoes: null,
+      accessory: null,
+    });
+  }, []);
+
+  // This effect runs when the screen comes into focus, ensuring the form is always fresh.
+  useFocusEffect(
+    useCallback(() => {
+      clearForm();
+    }, [clearForm]),
+  );
+
   const handleAddItem = clothItem => {
     // Find the first empty slot in the canvas
     const availableSlots = ['top', 'bottom', 'shoes', 'accessory'];
@@ -82,8 +101,9 @@ const OutfitBuilderScreen = ({navigation}) => {
     }
 
     await addOutfit({name: outfitName, rating, items: itemsInOutfit});
-    Alert.alert('Saved!', 'Your new outfit has been saved.');
-    navigation.goBack();
+    Alert.alert('Saved!', 'Your new outfit has been saved.', [
+      {text: 'OK', onPress: () => navigation.navigate('My Outfits')},
+    ]);
   };
 
   return (
