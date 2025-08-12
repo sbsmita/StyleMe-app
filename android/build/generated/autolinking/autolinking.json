@@ -129,6 +129,30 @@
         }
       }
     },
+    "react-native-purchases": {
+      "root": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-purchases",
+      "name": "react-native-purchases",
+      "platforms": {
+        "ios": {
+          "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-purchases/RNPurchases.podspec",
+          "version": "9.2.0",
+          "configurations": [],
+          "scriptPhases": []
+        },
+        "android": {
+          "sourceDir": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-purchases/android",
+          "packageImportPath": "import com.revenuecat.purchases.react.RNPurchasesPackage;",
+          "packageInstance": "new RNPurchasesPackage()",
+          "buildTypes": [],
+          "componentDescriptors": [],
+          "cmakeListsPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-purchases/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cxxModuleCMakeListsModuleName": null,
+          "cxxModuleCMakeListsPath": null,
+          "cxxModuleHeaderName": null,
+          "isPureCxxDependency": false
+        }
+      }
+    },
     "react-native-reanimated": {
       "root": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-reanimated",
       "name": "react-native-reanimated",
