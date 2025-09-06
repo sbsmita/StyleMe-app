@@ -19,7 +19,9 @@ const useOutfits = () => {
         setOutfits([]); // Ensure it's an empty array if nothing is stored
       }
     } catch (error) {
-      console.error('Failed to load outfits from storage', error);
+      if (__DEV__) {
+        console.log('Failed to load outfits from storage');
+      }
     } finally {
       setLoading(false);
     }
@@ -27,14 +29,16 @@ const useOutfits = () => {
 
   useEffect(() => {
     loadOutfits();
-  }, [loadOutfits]);
+  }, [loadOutfits]); // Now loadOutfits is stable, so we can include it
 
-  const saveOutfitsToStorage = async newOutfits => {
+    const saveOutfitsToStorage = async newOutfits => {
     try {
       await AsyncStorage.setItem(OUTFITS_STORAGE_KEY, JSON.stringify(newOutfits));
       setOutfits(newOutfits);
     } catch (error) {
-      console.error('Failed to save outfits to storage', error);
+      if (__DEV__) {
+        console.log('Failed to save outfits to storage', error);
+      }
     }
   };
 

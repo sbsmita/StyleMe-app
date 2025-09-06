@@ -22,11 +22,15 @@ import useClothes from '../hooks/useClothes';
 
 const handleImagePickerResponse = (response, setImage) => {
   if (response.didCancel) {
-    console.log('User cancelled image picker');
+    if (__DEV__) {
+      console.log('User cancelled image picker');
+    }
     return;
   }
   if (response.errorCode) {
-    console.error('ImagePicker Error: ', response.errorMessage);
+    if (__DEV__) {
+      console.log('ImagePicker Error: ', response.errorMessage);
+    }
     Alert.alert('Image Picker Error', response.errorMessage);
     return;
   }

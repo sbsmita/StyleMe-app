@@ -9,24 +9,45 @@ import {
   StatusBar,
   Alert,
 } from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useIsFocused, useFocusEffect} from '@react-navigation/native';
 import {COLORS} from '../constants/colors';
 import OutfitCard from '../components/OutfitCard';
 import useOutfits from '../hooks/useOutfits';
+import useSubscription from '../hooks/useSubscription';
+import SubscriptionService from '../services/subscriptionService';
 
 const MyOutfitsScreen = ({navigation}) => {
+  const insets = useSafeAreaInsets();
   const isFocused = useIsFocused();
-  const {outfits, deleteOutfit, refreshOutfits} = useOutfits();
+  const {outfits, loading, deleteOutfit, refreshOutfits} = useOutfits();
+  const {isSubscribed, canCreateOutfit, refreshSubscriptionStatus} = useSubscription();
 
-  // Refreshes the outfit list every time the screen comes into focus
+  // Refreshes the outfit list and subscription status every time the screen comes into focus
   useFocusEffect(
     React.useCallback(() => {
       refreshOutfits();
-    }, [refreshOutfits]),
+      refreshSubscriptionStatus();
+    }, [refreshOutfits, refreshSubscriptionStatus]),
   );
 
-  const handleAddNewOutfit = () => {
+  const handleAddNewOutfit = async () => {
+    // Check if user can create more outfits
+    // Use the current outfit count directly from the outfits array
+    const currentOutfitCount = outfits.length;
+    const permissionResult = await canCreateOutfit(currentOutfitCount);
+
+    if (!permissionResult.canCreate) {
+      // Show paywall if user has reached the limit
+      navigation.navigate('Paywall', {
+        outfitCount: currentOutfitCount,
+        remaining: permissionResult.remaining,
+        limit: permissionResult.limit,
+      });
+      return;
+    }
+
     navigation.navigate('Outfit Builder');
   };
 
@@ -36,8 +57,57 @@ const MyOutfitsScreen = ({navigation}) => {
       'Are you sure you want to delete this outfit?',
       [
         {text: 'Cancel', style: 'cancel'},
-        {text: 'Delete', style: 'destructive', onPress: () => deleteOutfit(id)},
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: async () => {
+            await deleteOutfit(id);
+            // Refresh the outfits to ensure the count is updated
+            await refreshOutfits();
+          }
+        },
       ],
+    );
+  };
+
+  const renderSubscriptionStatus = () => {
+    const currentOutfitCount = outfits.length;
+    const freeLimit = SubscriptionService.getFreeOutfitLimit();
+    const remaining = Math.max(0, freeLimit - currentOutfitCount);
+
+    if (isSubscribed) {
+      return (
+        <View style={styles.subscriptionStatus}>
+          <View style={styles.premiumBadge}>
+            <Icon name="diamond" size={16} color="white" />
+            <Text style={styles.premiumText}>Premium</Text>
+          </View>
+          <Text style={styles.subscriptionText}>Unlimited outfits available</Text>
+        </View>
+      );
+    }
+
+    return (
+      <View style={styles.subscriptionStatus}>
+        <Text style={styles.subscriptionTitle}>Free Plan</Text>
+        <Text style={styles.subscriptionText}>
+          {remaining > 0
+            ? `${remaining} free outfit${remaining === 1 ? '' : 's'} remaining`
+            : 'Upgrade to create more outfits'
+          }
+        </Text>
+        {remaining === 0 && (
+          <TouchableOpacity
+            style={styles.upgradeButton}
+            onPress={() => navigation.navigate('Paywall', {
+              outfitCount: currentOutfitCount,
+              remaining,
+              limit: freeLimit,
+            })}>
+            <Text style={styles.upgradeButtonText}>Upgrade to Premium</Text>
+          </TouchableOpacity>
+        )}
+      </View>
     );
   };
 
@@ -50,6 +120,7 @@ const MyOutfitsScreen = ({navigation}) => {
         renderItem={({item}) => (
           <OutfitCard outfit={item} onDelete={() => handleDelete(item.id)} />
         )}
+        ListHeaderComponent={renderSubscriptionStatus}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
             <Icon name="albums-outline" size={60} color={COLORS.textSecondary} />
@@ -61,7 +132,7 @@ const MyOutfitsScreen = ({navigation}) => {
         }
         contentContainerStyle={outfits.length === 0 ? styles.emptyListContainer : styles.listContainer}
       />
-      <TouchableOpacity style={styles.fab} onPress={handleAddNewOutfit}>
+      <TouchableOpacity style={[styles.fab, { bottom: insets.bottom + 20 }]} onPress={handleAddNewOutfit}>
         <Icon name="add" size={30} color={COLORS.textOnPrimary} />
       </TouchableOpacity>
     </SafeAreaView>
@@ -102,7 +173,6 @@ const styles = StyleSheet.create({
   fab: {
     position: 'absolute',
     right: 30,
-    bottom: 30,
     backgroundColor: COLORS.primary,
     width: 60,
     height: 60,
@@ -110,6 +180,52 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 8,
+  },
+  subscriptionStatus: {
+    backgroundColor: COLORS.card,
+    margin: 20,
+    padding: 20,
+    borderRadius: 15,
+    marginBottom: 10,
+  },
+  subscriptionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: COLORS.text,
+    marginBottom: 4,
+  },
+  subscriptionText: {
+    fontSize: 14,
+    color: COLORS.textSecondary,
+    marginBottom: 12,
+  },
+  premiumBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: COLORS.primary,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+    alignSelf: 'flex-start',
+    marginBottom: 8,
+  },
+  premiumText: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginLeft: 6,
+  },
+  upgradeButton: {
+    backgroundColor: COLORS.primary,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    alignSelf: 'flex-start',
+  },
+  upgradeButtonText: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: 'bold',
   },
 });
 

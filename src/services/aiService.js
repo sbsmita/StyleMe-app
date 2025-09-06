@@ -11,7 +11,9 @@
  * @returns {Promise<object>} A promise that resolves to the resulting image asset.
  */
 export const virtualTryOn = (userImage, garmentImage) => {
-  console.log('Simulating AI Virtual Try-On with:', userImage.uri, garmentImage.uri);
+  if (__DEV__) {
+    console.log('Simulating AI Virtual Try-On with:', userImage.uri, garmentImage.uri);
+  }
   return new Promise(resolve => {
     setTimeout(() => {
       // In a real app, the URI would come from the AI service response.

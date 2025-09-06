@@ -10,6 +10,7 @@ import {
   StatusBar,
   TextInput,
 } from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useIsFocused} from '@react-navigation/native';
 
@@ -19,6 +20,7 @@ import ClothingCard from '../components/ClothingCard';
 import AddClothModal from '../components/AddClothModal';
 
 const MyWearScreen = () => {
+  const insets = useSafeAreaInsets();
   const isFocused = useIsFocused();
   const {clothes, addCloth, updateCloth, deleteCloth} = useClothes();
   const [modalVisible, setModalVisible] = useState(false);
@@ -113,7 +115,7 @@ const MyWearScreen = () => {
         cloth={editingCloth}
       />
 
-      <TouchableOpacity style={styles.fab} onPress={handleAddNew}>
+      <TouchableOpacity style={[styles.fab, { bottom: insets.bottom + 20 }]} onPress={handleAddNew}>
         <Icon name="add" size={30} color={COLORS.textOnPrimary} />
       </TouchableOpacity>
     </SafeAreaView>
@@ -150,7 +152,6 @@ const styles = StyleSheet.create({
   fab: {
     position: 'absolute',
     right: 30,
-    bottom: 30,
     backgroundColor: COLORS.primary,
     width: 60,
     height: 60,

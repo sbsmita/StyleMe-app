@@ -7,6 +7,8 @@ import MyWearScreen from '../screens/MyWearScreen';
 import VirtualTryOnScreen from '../screens/VirtualTryOnScreen';
 import MyOutfitsScreen from '../screens/MyOutfitsScreen';
 import OutfitBuilderScreen from '../screens/OutfitBuilderScreen';
+import PaywallScreen from '../screens/PaywallScreen';
+import MyPurchasesScreen from '../screens/MyPurchasesScreen';
 import {COLORS} from '../constants/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -49,6 +51,10 @@ const AppNavigator = () => {
         <Drawer.Screen name="Outfit Builder" component={OutfitBuilderScreen} options={{
           drawerItemStyle: { height: 0 } // Hide from drawer, only accessible via navigation
         }}/>
+        <Drawer.Screen name="Paywall" component={PaywallScreen} options={{
+          drawerItemStyle: { height: 0 }, // Hide from drawer, only accessible via navigation
+          headerShown: false // Hide header for full-screen paywall experience
+        }}/>
         <Drawer.Screen
           name="Virtual Try-On"
           component={VirtualTryOnScreen}
@@ -73,6 +79,9 @@ const AppNavigator = () => {
             },
           }}
         />
+        <Drawer.Screen name="My Purchases" component={MyPurchasesScreen} options={{
+          drawerIcon: ({color, size}) => <Icon name="card-outline" size={size} color={color} />
+        }}/>
       </Drawer.Navigator>
     </NavigationContainer>
   );

@@ -12,24 +12,28 @@ import {
   PermissionsAndroid,
   Platform,
 } from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {COLORS} from '../constants/colors';
 
 const AddClothModal = ({visible, onClose, onSave, cloth}) => {
+  const insets = useSafeAreaInsets();
   const [itemName, setItemName] = useState('');
   const [brand, setBrand] = useState('');
   const [material, setMaterial] = useState('');
   const [image, setImage] = useState(null);
 
   useEffect(() => {
-    if (cloth) {
-      setItemName(cloth.name);
-      setBrand(cloth.brand);
-      setMaterial(cloth.material);
-      setImage({uri: cloth.imageUri});
-    } else {
-      resetForm();
+    if (visible) { // Only run when modal becomes visible
+      if (cloth) {
+        setItemName(cloth.name);
+        setBrand(cloth.brand);
+        setMaterial(cloth.material);
+        setImage({uri: cloth.imageUri});
+      } else {
+        resetForm();
+      }
     }
   }, [cloth, visible]);
 
@@ -56,11 +60,15 @@ const AddClothModal = ({visible, onClose, onSave, cloth}) => {
 
   const handleImagePickerResponse = response => {
     if (response.didCancel) {
-      console.log('User cancelled image picker');
+      if (__DEV__) {
+        console.log('User cancelled image picker');
+      }
       return;
     }
     if (response.errorCode) {
-      console.error('ImagePicker Error:', response.errorCode, response.errorMessage);
+      if (__DEV__) {
+        console.log('ImagePicker Error:', response.errorCode, response.errorMessage);
+      }
       Alert.alert('Image Picker Error', response.errorMessage || 'Unknown error');
       return;
     }
@@ -85,7 +93,9 @@ const AddClothModal = ({visible, onClose, onSave, cloth}) => {
       );
       return granted === PermissionsAndroid.RESULTS.GRANTED;
     } catch (err) {
-      console.warn('Permission error:', err);
+      if (__DEV__) {
+        console.log('Permission error:', err);
+      }
       return false;
     }
   };
@@ -118,7 +128,10 @@ const AddClothModal = ({visible, onClose, onSave, cloth}) => {
       visible={visible}
       onRequestClose={handleClose}>
       <View style={styles.modalContainer}>
-        <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
+        <ScrollView
+          style={styles.scrollView}
+          contentContainerStyle={[styles.scrollViewContent, { paddingBottom: Math.max(insets.bottom + 20, 20) }]}
+        >
           <Text style={styles.modalTitle}>{cloth ? 'Edit Item' : 'Add New Item'}</Text>
 
           <TouchableOpacity style={styles.imagePicker} onPress={selectImageSource}>

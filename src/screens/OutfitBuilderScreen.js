@@ -9,12 +9,14 @@ import {
   Alert,
   Image,
 } from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useFocusEffect} from '@react-navigation/native';
 import {COLORS} from '../constants/colors';
 import StarRating from '../components/StarRating';
 import useClothes from '../hooks/useClothes';
 import useOutfits from '../hooks/useOutfits';
+import useSubscription from '../hooks/useSubscription';
 import {FlatList} from 'react-native-gesture-handler';
 
 const DropZone = ({title, item, onRemove}) => (
@@ -39,8 +41,10 @@ const DropZone = ({title, item, onRemove}) => (
 );
 
 const OutfitBuilderScreen = ({navigation}) => {
-  const {clothes} = useClothes();
-  const {addOutfit} = useOutfits(); // Get the addOutfit function from our hook
+  const insets = useSafeAreaInsets();
+  const {clothes, loading: clothesLoading, refreshClothes} = useClothes();
+  const {outfits, loading: outfitsLoading, addOutfit} = useOutfits(); // Get outfits count and addOutfit function
+  const {canCreateOutfit, refreshSubscriptionStatus} = useSubscription();
   const [outfitName, setOutfitName] = useState('');
   const [rating, setRating] = useState(0);
   const [canvasItems, setCanvasItems] = useState({
@@ -65,10 +69,24 @@ const OutfitBuilderScreen = ({navigation}) => {
   useFocusEffect(
     useCallback(() => {
       clearForm();
-    }, [clearForm]),
+      refreshClothes(); // Refresh clothes when screen comes into focus
+      refreshSubscriptionStatus(); // Refresh subscription status to get updated limits
+    }, [clearForm, refreshClothes, refreshSubscriptionStatus]),
   );
 
   const handleAddItem = clothItem => {
+    // Check if the item is already in the outfit
+    const itemsInOutfit = Object.values(canvasItems).filter(Boolean);
+    const isAlreadyAdded = itemsInOutfit.some(item => item.id === clothItem.id);
+
+    if (isAlreadyAdded) {
+      Alert.alert(
+        'Item Already Added',
+        'This item is already in your outfit. You cannot add the same item twice.',
+      );
+      return;
+    }
+
     // Find the first empty slot in the canvas
     const availableSlots = ['top', 'bottom', 'shoes', 'accessory'];
     const emptySlot = availableSlots.find(slot => !canvasItems[slot]);
@@ -97,6 +115,21 @@ const OutfitBuilderScreen = ({navigation}) => {
 
     if (itemsInOutfit.length === 0) {
       Alert.alert('Empty Outfit', 'Please add at least one item to the canvas before saving.');
+      return;
+    }
+
+    // Check subscription status before allowing outfit creation
+    // Use the current outfit count directly from the outfits array
+    const currentOutfitCount = outfits.length;
+    const permissionResult = await canCreateOutfit(currentOutfitCount);
+
+    if (!permissionResult.canCreate) {
+      // Show paywall if user has reached the limit
+      navigation.navigate('Paywall', {
+        outfitCount: currentOutfitCount,
+        remaining: permissionResult.remaining,
+        limit: permissionResult.limit,
+      });
       return;
     }
 
@@ -150,6 +183,25 @@ const OutfitBuilderScreen = ({navigation}) => {
 
             <Text style={styles.sectionTitle}>Your Clothes</Text>
             <Text style={styles.infoText}>Tap an item to add it to the canvas</Text>
+            {clothes.length === 0 && !clothesLoading && (
+              <View style={styles.noClothesContainer}>
+                <Icon name="shirt-outline" size={60} color={COLORS.textSecondary} />
+                <Text style={styles.noClothesText}>No clothes in your wardrobe</Text>
+                <Text style={styles.noClothesSubText}>
+                  Go to "My Wardrobe" to add some clothes first
+                </Text>
+                <TouchableOpacity
+                  style={styles.goToWardrobeButton}
+                  onPress={() => navigation.navigate('My Wardrobe')}>
+                  <Text style={styles.goToWardrobeButtonText}>Go to My Wardrobe</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+            {clothesLoading && (
+              <View style={styles.loadingContainer}>
+                <Text style={styles.loadingText}>Loading clothes...</Text>
+              </View>
+            )}
           </>
         }
         data={clothes}
@@ -166,7 +218,10 @@ const OutfitBuilderScreen = ({navigation}) => {
         )}
         contentContainerStyle={styles.listContainer}
       />
-      <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+      <TouchableOpacity
+        style={[styles.saveButton, { paddingBottom: Math.max(insets.bottom + 10, 20) }]}
+        onPress={handleSave}
+      >
         <Text style={styles.saveButtonText}>Save Outfit</Text>
       </TouchableOpacity>
     </SafeAreaView>
@@ -242,6 +297,45 @@ const styles = StyleSheet.create({
   clothName: {flex: 1, color: COLORS.text, fontSize: 16, fontWeight: '500'},
   saveButton: {backgroundColor: COLORS.success, padding: 20, alignItems: 'center'},
   saveButtonText: {color: COLORS.textOnPrimary, fontSize: 18, fontWeight: 'bold'},
+  noClothesContainer: {
+    alignItems: 'center',
+    padding: 40,
+    marginTop: 20,
+  },
+  noClothesText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: COLORS.text,
+    marginTop: 16,
+    textAlign: 'center',
+  },
+  noClothesSubText: {
+    fontSize: 14,
+    color: COLORS.textSecondary,
+    marginTop: 8,
+    textAlign: 'center',
+    paddingHorizontal: 20,
+  },
+  goToWardrobeButton: {
+    backgroundColor: COLORS.primary,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    marginTop: 20,
+  },
+  goToWardrobeButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  loadingContainer: {
+    alignItems: 'center',
+    padding: 20,
+  },
+  loadingText: {
+    fontSize: 16,
+    color: COLORS.textSecondary,
+  },
 });
 
 export default OutfitBuilderScreen;

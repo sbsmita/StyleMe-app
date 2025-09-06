@@ -184,7 +184,7 @@
       "platforms": {
         "ios": {
           "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec",
-          "version": "5.5.2",
+          "version": "5.6.1",
           "configurations": [],
           "scriptPhases": []
         },

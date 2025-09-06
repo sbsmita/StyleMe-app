@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import 'react-native-get-random-values';
 import {v4 as uuidv4} from 'uuid';
@@ -7,27 +7,40 @@ const STORAGE_KEY = '@StyleMe/clothes';
 
 const useClothes = () => {
   const [clothes, setClothes] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const loadClothes = useCallback(async () => {
+    setLoading(true);
+    try {
+      const storedClothes = await AsyncStorage.getItem(STORAGE_KEY);
+      if (storedClothes !== null) {
+        const parsedClothes = JSON.parse(storedClothes);
+        setClothes(parsedClothes);
+      } else {
+        setClothes([]);
+      }
+    } catch (e) {
+      if (__DEV__) {
+        console.log('Failed to load clothes');
+      }
+      setClothes([]);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    const loadClothes = async () => {
-      try {
-        const storedClothes = await AsyncStorage.getItem(STORAGE_KEY);
-        if (storedClothes !== null) {
-          setClothes(JSON.parse(storedClothes));
-        }
-      } catch (e) {
-        console.error('Failed to load clothes.', e);
-      }
-    };
     loadClothes();
-  }, []);
+  }, [loadClothes]); // Now loadClothes is stable, so we can include it
 
   const saveClothes = async newClothes => {
     try {
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newClothes));
       setClothes(newClothes);
     } catch (e) {
-      console.error('Failed to save clothes.', e);
+      if (__DEV__) {
+        console.log('Failed to save clothes');
+      }
     }
   };
 
@@ -57,7 +70,7 @@ const useClothes = () => {
     saveClothes(newClothes);
   };
 
-  return {clothes, addCloth, updateCloth, deleteCloth};
+  return {clothes, loading, addCloth, updateCloth, deleteCloth, refreshClothes: loadClothes};
 };
 
 export default useClothes;
