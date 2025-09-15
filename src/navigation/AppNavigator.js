@@ -67,16 +67,11 @@ const AppNavigator = () => {
                 <Text style={[styles.drawerLabel, {color}]}>
                   Virtual Try-On
                 </Text>
-                <View style={styles.chip}>
-                  <Text style={styles.chipText}>Coming Soon</Text>
+                <View style={styles.newChip}>
+                  <Text style={styles.chipText}>NEW</Text>
                 </View>
               </View>
             ),
-          }}
-          listeners={{
-            drawerItemPress: e => {
-              e.preventDefault();
-            },
           }}
         />
         <Drawer.Screen name="My Purchases" component={MyPurchasesScreen} options={{
@@ -98,6 +93,13 @@ const styles = StyleSheet.create({
   },
   chip: {
     backgroundColor: COLORS.danger,
+    borderRadius: 8,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    marginLeft: 10,
+  },
+  newChip: {
+    backgroundColor: COLORS.success,
     borderRadius: 8,
     paddingHorizontal: 6,
     paddingVertical: 2,

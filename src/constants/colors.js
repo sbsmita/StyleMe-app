@@ -8,6 +8,7 @@ export const COLORS = {
   textSecondary: '#3E5879', // Medium Blue for subtitles
   accent: '#213555', // Same as primary
   danger: '#E74C3C', // Standard Red for delete actions
+  error: '#E74C3C', // Standard Red for error states
   success: '#28a745', // Standard Green for success/save actions
   neutral: '#3E5879', // Medium Blue for neutral actions
   star: '#FFD700', // Gold color for stars

@@ -23,9 +23,9 @@ const PremiumFeaturesList = () => {
       description: 'Create as many outfits as you want without any restrictions',
     },
     {
-      iconName: 'camera-outline',
-      title: 'Virtual Try-On',
-      description: 'See how outfits look on you with our virtual try-on feature',
+      iconName: 'shirt-outline',
+      title: 'AI Virtual Try-On',
+      description: 'Professional AI-powered virtual try-on with Fashn.ai - 50 try-ons per month',
     },
     {
       iconName: 'checkmark-circle-outline',

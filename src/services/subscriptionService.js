@@ -1,16 +1,20 @@
 import Purchases from 'react-native-purchases';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {revenue_cat_apiKey  } from '@env';
+
 
 const SUBSCRIPTION_STORAGE_KEY = '@StyleMe_subscription';
+const VIRTUAL_TRYON_USAGE_KEY = '@StyleMe_virtual_tryon_usage';
 const FREE_OUTFIT_LIMIT = 2;
+const PREMIUM_VIRTUAL_TRYON_LIMIT = 50; // 50 virtual try-ons per month for premium users
 
 class SubscriptionService {
   static async initializePurchases() {
     try {
       // RevenueCat API keys - IMPORTANT: Use your production key for release builds
       const apiKey = __DEV__
-        ? 'goog_JIsOEoVGIgVjhYcNLViUxChAuuW'  // Development key
-        : 'goog_JIsOEoVGIgVjhYcNLViUxChAuuW';  // TODO: Replace with your PRODUCTION key before release!
+        ? revenue_cat_apiKey  // Development key
+        : revenue_cat_apiKey;  // TODO: Replace with your PRODUCTION key before release!
       await Purchases.configure({apiKey});
 
       if (__DEV__) {
@@ -232,6 +236,103 @@ class SubscriptionService {
 
   static getFreeOutfitLimit() {
     return FREE_OUTFIT_LIMIT;
+  }
+
+  static async canUseVirtualTryOn() {
+    const isSubscribed = await this.getSubscriptionStatus();
+
+    if (!isSubscribed) {
+      return {
+        canUse: false,
+        isSubscribed: false,
+        reason: 'Virtual Try-On is a premium feature. Subscribe to unlock unlimited virtual try-ons.',
+        remaining: 0,
+        limit: 0
+      };
+    }
+
+    // Check monthly usage for premium users
+    const currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM format
+    const usageKey = `${VIRTUAL_TRYON_USAGE_KEY}_${currentMonth}`;
+
+    try {
+      const usageData = await AsyncStorage.getItem(usageKey);
+      const currentUsage = usageData ? JSON.parse(usageData).count : 0;
+
+      const canUse = currentUsage < PREMIUM_VIRTUAL_TRYON_LIMIT;
+      const remaining = Math.max(0, PREMIUM_VIRTUAL_TRYON_LIMIT - currentUsage);
+
+      return {
+        canUse,
+        isSubscribed: true,
+        remaining,
+        limit: PREMIUM_VIRTUAL_TRYON_LIMIT,
+        used: currentUsage
+      };
+    } catch (error) {
+      if (__DEV__) {
+        console.log('Failed to check virtual try-on usage');
+      }
+      // If we can't check usage, allow premium users to use the feature
+      return {
+        canUse: true,
+        isSubscribed: true,
+        remaining: PREMIUM_VIRTUAL_TRYON_LIMIT,
+        limit: PREMIUM_VIRTUAL_TRYON_LIMIT,
+        used: 0
+      };
+    }
+  }
+
+  static async incrementVirtualTryOnUsage() {
+    const currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM format
+    const usageKey = `${VIRTUAL_TRYON_USAGE_KEY}_${currentMonth}`;
+
+    try {
+      const usageData = await AsyncStorage.getItem(usageKey);
+      const currentData = usageData ? JSON.parse(usageData) : { count: 0, month: currentMonth };
+
+      const newData = {
+        count: currentData.count + 1,
+        month: currentMonth,
+        lastUsed: new Date().toISOString()
+      };
+
+      await AsyncStorage.setItem(usageKey, JSON.stringify(newData));
+      return newData.count;
+    } catch (error) {
+      if (__DEV__) {
+        console.log('Failed to increment virtual try-on usage');
+      }
+      return 0;
+    }
+  }
+
+  static async getVirtualTryOnUsage() {
+    const currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM format
+    const usageKey = `${VIRTUAL_TRYON_USAGE_KEY}_${currentMonth}`;
+
+    try {
+      const usageData = await AsyncStorage.getItem(usageKey);
+      const currentData = usageData ? JSON.parse(usageData) : { count: 0, month: currentMonth };
+
+      return {
+        used: currentData.count,
+        limit: PREMIUM_VIRTUAL_TRYON_LIMIT,
+        remaining: Math.max(0, PREMIUM_VIRTUAL_TRYON_LIMIT - currentData.count),
+        month: currentMonth
+      };
+    } catch (error) {
+      if (__DEV__) {
+        console.log('Failed to get virtual try-on usage');
+      }
+      return {
+        used: 0,
+        limit: PREMIUM_VIRTUAL_TRYON_LIMIT,
+        remaining: PREMIUM_VIRTUAL_TRYON_LIMIT,
+        month: currentMonth
+      };
+    }
   }
 
   static async getCustomerInfo() {

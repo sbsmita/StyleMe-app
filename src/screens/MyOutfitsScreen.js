@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {useIsFocused, useFocusEffect} from '@react-navigation/native';
 import {COLORS} from '../constants/colors';
 import OutfitCard from '../components/OutfitCard';
+import OutfitViewer from '../components/OutfitViewer';
 import useOutfits from '../hooks/useOutfits';
 import useSubscription from '../hooks/useSubscription';
 import SubscriptionService from '../services/subscriptionService';
@@ -23,6 +24,10 @@ const MyOutfitsScreen = ({navigation}) => {
   const isFocused = useIsFocused();
   const {outfits, loading, deleteOutfit, refreshOutfits} = useOutfits();
   const {isSubscribed, canCreateOutfit, refreshSubscriptionStatus} = useSubscription();
+  
+  // State for outfit viewer
+  const [selectedOutfit, setSelectedOutfit] = useState(null);
+  const [showOutfitViewer, setShowOutfitViewer] = useState(false);
 
   // Refreshes the outfit list and subscription status every time the screen comes into focus
   useFocusEffect(
@@ -68,6 +73,22 @@ const MyOutfitsScreen = ({navigation}) => {
         },
       ],
     );
+  };
+
+  const handleViewOutfit = (outfit) => {
+    setSelectedOutfit(outfit);
+    setShowOutfitViewer(true);
+  };
+
+  const handleCloseOutfitViewer = () => {
+    setShowOutfitViewer(false);
+    setSelectedOutfit(null);
+  };
+
+  const handleDeleteFromViewer = async (outfit) => {
+    await deleteOutfit(outfit.id);
+    await refreshOutfits();
+    handleCloseOutfitViewer();
   };
 
   const renderSubscriptionStatus = () => {
@@ -118,7 +139,11 @@ const MyOutfitsScreen = ({navigation}) => {
         data={outfits}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
-          <OutfitCard outfit={item} onDelete={() => handleDelete(item.id)} />
+          <OutfitCard 
+            outfit={item} 
+            onDelete={() => handleDelete(item.id)}
+            onPress={() => handleViewOutfit(item)}
+          />
         )}
         ListHeaderComponent={renderSubscriptionStatus}
         ListEmptyComponent={
@@ -135,6 +160,15 @@ const MyOutfitsScreen = ({navigation}) => {
       <TouchableOpacity style={[styles.fab, { bottom: insets.bottom + 20 }]} onPress={handleAddNewOutfit}>
         <Icon name="add" size={30} color={COLORS.textOnPrimary} />
       </TouchableOpacity>
+
+      {/* Outfit Viewer Modal */}
+      <OutfitViewer
+        visible={showOutfitViewer}
+        onClose={handleCloseOutfitViewer}
+        outfit={selectedOutfit}
+        onDelete={handleDeleteFromViewer}
+        showActions={true}
+      />
     </SafeAreaView>
   );
 };
