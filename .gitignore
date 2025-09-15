@@ -17,6 +17,9 @@ ios/build/
 .env
 .env.*
 !.env.example
+.env.local
+.env.production
+.env.staging
 
 # IDE-specific files
 .idea/
@@ -38,7 +41,12 @@ yarn-error.log*
 # Local configuration
 # This file contains sensitive paths and should not be committed.
 local.properties
+android/local.properties
+android/app/*.jks
+android/app/*.keystore
 
+ios/*.p12
+ios/*.mobileprovision
 # Expo
 .expo
 dist/
