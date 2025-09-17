@@ -159,7 +159,7 @@
       "platforms": {
         "ios": {
           "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-reanimated/RNReanimated.podspec",
-          "version": "4.0.1",
+          "version": "4.1.0",
           "configurations": [],
           "scriptPhases": []
         },
@@ -275,7 +275,7 @@
       "platforms": {
         "ios": {
           "podspecPath": "/home/sb/hackathon_london/hack_rev/StyleMe-app/node_modules/react-native-worklets/RNWorklets.podspec",
-          "version": "0.4.1",
+          "version": "0.5.1",
           "configurations": [],
           "scriptPhases": []
         },

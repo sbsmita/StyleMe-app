@@ -41,9 +41,12 @@ yarn-error.log*
 # Local configuration
 # This file contains sensitive paths and should not be committed.
 local.properties
+gradle.properties
 android/local.properties
 android/app/*.jks
 android/app/*.keystore
+android/gradle.properties
+**/gradle.properties
 
 ios/*.p12
 ios/*.mobileprovision

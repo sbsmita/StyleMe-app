@@ -8,11 +8,6 @@ project.ext.envConfigFiles = [
     release: ".env.production",
 ]
 
-def keystorePropertiesFile = rootProject.file("local.properties")
-def keystoreProperties = new Properties()
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-}
 
 /**
  * This is the configuration block to customize your React Native Android app.
@@ -40,8 +35,8 @@ android {
         applicationId "com.stylemeapp.mobile"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
-        versionName "1.0.7"
+        versionCode 8
+        versionName "1.0.8"
     }
     signingConfigs {
         debug {
@@ -51,12 +46,12 @@ android {
             keyPassword 'android'
         }
         release {
-            if (keystoreProperties.getProperty('MYAPP_UPLOAD_STORE_FILE') != null) {
-                storeFile file(keystoreProperties.getProperty('MYAPP_UPLOAD_STORE_FILE'))
-                storePassword keystoreProperties.getProperty('MYAPP_UPLOAD_STORE_PASSWORD')
-                keyAlias keystoreProperties.getProperty('MYAPP_UPLOAD_KEY_ALIAS')
-                keyPassword keystoreProperties.getProperty('MYAPP_UPLOAD_KEY_PASSWORD')
-            }
+            if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+                storeFile file(MYAPP_UPLOAD_STORE_FILE)
+                storePassword MYAPP_UPLOAD_STORE_PASSWORD
+                keyAlias MYAPP_UPLOAD_KEY_ALIAS
+                keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+                }
         }
     }
     buildTypes {
