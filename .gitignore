@@ -49,6 +49,11 @@ android/app/*.keystore
 android/gradle.properties
 **/gradle.properties
 
+# Certificate files - keep local only
+*.pem
+*.der
+*.crt
+
 ios/*.p12
 ios/*.mobileprovision
 # Expo
